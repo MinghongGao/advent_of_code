@@ -1,0 +1,35 @@
+{
+  "name": "Advent of Code Env",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
+    "ghcr.io/devcontainers-extra/features/uv:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "charliermarsh.ruff",
+        "eamodio.gitlens",
+        "ms-vscode.live-server"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+        "claudeCode.allowDangerouslySkipPermissions": true,
+        "claudeCode.initialPermissionMode": "bypassPermissions"
+      }
+    }
+  },
+  "mounts": [
+    "source=claude-code-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
+    "source=claude-code-config-${devcontainerId},target=/home/vscode/.claude,type=volume",
+  ],
+  "containerEnv": {
+    "CLAUDE_CONFIG_DIR": "/home/vscode/.claude"
+  },
+  "onCreateCommand": "sudo chown -R vscode:vscode /commandhistory /home/vscode/.claude  /home/vscode/.cache"
+}
